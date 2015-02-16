@@ -2,9 +2,41 @@
 <html>
 <head>
 	<meta charset="utf-8" />
+	<style>
+		svg .styled-circle {
+			fill: darkmagenta;
+			stroke: black;
+			stroke-width: 5;
+		}
+
+		svg .styled-line {
+			stroke: black;
+		}
+
+		svg .styled-path {
+			stroke="black"
+			fill="none"
+		}
 	</style>
 </head>
 <body>
 	<p>SVG Sandbox</p>
+	<svg width="500px" height="500px">
+		<circle cx="100" cy="150" r="20" class="styled-circle" />
+		<circle cx="15" cy="250" r="10" class="styled-circle" />
+		<circle cx="60" cy="300" r="50" class="styled-circle" />
+
+		<rect x="0" y="0" width="100" height="20" />
+
+		<rect x="175" y="10" width="80" height="30" rx="5" ry="2" />
+
+		<ellipse cx="250" cy="300" rx="10" ry="50" />
+
+		<polygon points="300,0 250,100 425,8" />
+
+		<line x1="300" y1="300" x2="450" y2="10" class="styled-line" />
+
+		<path d="M 0 50 q 50 -50 100 0 1 -100 0" class="styled-path" />
+	</svg>
 </body>
 </html>
