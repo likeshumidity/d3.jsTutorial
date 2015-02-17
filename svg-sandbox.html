@@ -14,8 +14,14 @@
 		}
 
 		svg .styled-path {
-			stroke="black"
-			fill="none"
+			stroke: black;
+			fill: none;
+		}
+
+		svg .styled-text {
+			fill: lightgrey;
+			stroke: red;
+			font-family: "Comic Sans MS";
 		}
 	</style>
 </head>
@@ -37,6 +43,28 @@
 		<line x1="300" y1="300" x2="450" y2="10" class="styled-line" />
 
 		<path d="M 0 50 q 50 -50 100 0 1 -100 0" class="styled-path" />
+		<!-- M is moveto, q is bezier curve -->
+
+		<text x="10" y="400" font-size="20" class="styled-text">SVG sandbox, now in SVG only</text>
+	</svg>
+	<svg width="500px" height="500px">
+		<text x="10" y="50" font-size="40" fill="grey">Anchors away! Or not...</text>
+		<circle cx="10" cy="50" r="4" fill="magenta" />
+		<line x1="10" y1="50" x2="420" y2="50" stroke="magenta" />
+	</svg>
+	<svg width="700px" height="500px">
+		<text x="10" y="20" text-anchor="start">This text is</text>
+		<text x="10" y="35" text-anchor="start">aligned</text>
+		<text x="10" y="50" text-anchor="start">to the start</text>
+		<text x="300" y="20" text-anchor="middle">This text is</text>
+		<text x="300" y="35" text-anchor="middle">aligned</text>
+		<text x="300" y="50" text-anchor="middle">to the middle</text>
+		<text x="590" y="20" text-anchor="end">This text is</text>
+		<text x="590" y="35" text-anchor="end">aligned</text>
+		<text x="590" y="50" text-anchor="end">to the end</text>
+	</svg>
+	<svg width="500px" height="500px">
+
 	</svg>
 </body>
 </html>
