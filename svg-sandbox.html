@@ -45,6 +45,34 @@
 			stroke: darkmagenta;
 			stroke-width: 3;
 		}
+
+		svg.stacked-elements text {
+			text-anchor: middle;
+			fill: lightgrey;
+		}
+
+		svg.stacked-elements rect {
+			fill: crimson;
+			opacity: 0.5;
+		}
+
+		svg .blue-group {
+			fill: blue;
+			stroke-width: 3;
+		}
+
+		svg .red-group {
+			fill: red;
+			stroke-width: 4;
+			font-weight: bold;
+		}
+
+		svg .green-group {
+			fill: green;
+			stroke-width: 2;
+			font-family: Arial;
+			fill-opacity: 0.5;
+		}
 	</style>
 </head>
 <body>
@@ -112,6 +140,32 @@
 		<line x1="110" y1="165" x2="350" y2="165" class="dasharray-demo" stroke-dasharray="10 4 4 4" />
 		<text x="100" y="190" text-anchor="end">5 10 1 20 30 5</text>
 		<line x1="110" y1="185" x2="350" y2="185" class="dasharray-demo" stroke-dasharray="5 10 1 20 30 5" />
+	</svg>
+	<svg width="500px" height="500px" class="stacked-elements">
+		<text x="100" y="35">Text on the bottom</text>
+		<rect x="0" y="0" width="200" height="60" />
+		<rect x="250" y="0" width="200" height="60" />
+		<text x="350" y="35">Text on top</text>
+	</svg>
+	<svg width="700px" height="500px">
+		<g class="blue-group">
+			<text x="0" y="20">Blue group</text>
+			<rect x="0" y="40" width="50" height="50" rx="10" ry="10" />
+			<polygon points="80,30 70,70 130,50" />
+			<line x1="60" y1="75" x2="120" y2="90" stroke="blue" />
+		</g>
+		<g class="red-group">
+			<text x="200" y="20">Red group</text>
+			<rect x="200" y="40" width="50" height="50" rx="10" ry="10" />
+			<polygon points="280,30 270,70 330,50" />
+			<line x1="260" y1="75" x2="320" y2="90" stroke="red" />
+		</g>
+		<g class="green-group">
+			<text x="400" y="20">Green group</text>
+			<rect x="400" y="40" width="50" height="50" rx="10" ry="10" />
+			<polygon points="480,30 470,70 530,50" />
+			<line x1="460" y1="75" x2="520" y2="90" stroke="green" />
+		</g>
 	</svg>
 </body>
 </html>
