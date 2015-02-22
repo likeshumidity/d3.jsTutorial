@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+body {
+	font-family: Helvetica, Arial;
+}
+svg {
+	width: 500px;
+	height: 500px;
+}
+.top-label {
+	font-size: 13px;
+	font-style: italic;
+	text-transform: uppercase;
+	float: left;
+}
+.age-label {
+	text-align: right;
+	font-weight: bold;
+	width: 90px;
+	padding-right: 10px;
+}
+.clearfix {
+	clear: both;
+}
+.bar {
+	fill: DarkSlateBlue;
+}
+.bar-label {
+	text-anchor: end;
+}
+.axis-label {
+	text-anchor: middle;
+	font-size: 13px;
+}
+</style>
+</head>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+	<!-- Your HTML goes here -->
+
+<script>
+var popData = [[1.6, "80 and up"],
+    [1.5, "75-79"],
+    [2.1, "70-74"],
+    [2.6, "65-69"],
+    [3.4, "60-64"],
+    [4.5, "55-59"],
+    [5.1, "50-54"],
+    [6.0, "45-49"],
+    [6.6, "40-44"],
+    [7.1, "35-39"],
+    [7.3, "30-34"],
+    [8.1, "25-29"],
+    [8.9, "20-24"],
+    [8.8, "15-19"],
+    [8.6, "10-14"],
+    [8.8, "5-9"],
+    [9.3, "0-4"]];
+
+var barHeight = 20,
+    barGap = 5,
+    barSpacing = barHeight + barGap;
+
+var barGraphWidth = 400,
+    scaleFactor = barGraphWidth / popData[16][0];
+
+var body = d3.select("body");
+
+body.append("h2")
+	.text("Age distribution of the world, 2010");
+
+body.append("div")
+	.attr("class", "top-label age-label")
+	.append("p")
+		.text("age group");
+
+body.append("div")
+	.attr("class", "top-label")
+	.append("p")
+		.text("portion of the population");
+
+body.append("div")
+	.attr("class", "clearfix");
+
+var svg = body.append("svg");
+
+var barGroup = svg.append("g")
+	.attr("transform", "translate(100,30) scale(" + scaleFactor + ",1)")
+	.attr("class", "bar");
+
+for (i = 0; i < popData.length; i++) {
+	barGroup.append("rect")
+		.attr("x", 0)
+		.attr("y", i * barSpacing)
+		.attr("height", barHeight)
+		.attr("width", popData[i][0]);
+}
+
+var barLabelGroup = svg.append("g")
+	.attr("class", "bar-label");
+
+for (i = 0; i < popData.length; i++) {
+	barLabelGroup.append("text")
+		.attr("x", 90)
+		.attr("y", i * barSpacing + 45)
+		.text(popData[i][1]);
+}
+
+var axisTickPercent = [0.0,
+    2.5,
+    5.0,
+    7.5];
+
+var axisTickGroup = svg.append("g")
+	.attr("transform", "translate(100,30)")
+	.attr("stroke", "white");
+
+for (i = 0; i < axisTickPercent.length; i++) {
+	axisTickGroup.append("line")
+		.attr("x1", axisTickPercent[i] * scaleFactor)
+		.attr("y1", 0)
+		.attr("x2", axisTickPercent[i] * scaleFactor)
+		.attr("y2", popData.length * barSpacing - barGap)
+}
+
+var axisLabelGroup = svg.append("g")
+	.attr("transform", "translate(100,30)")
+	.attr("class", "axis-label");
+
+for (i = 0; i < axisTickPercent.length; i++) {
+	axisLabelGroup.append("text")
+		.attr("x", axisTickPercent[i] * scaleFactor)
+		.attr("y", -5)
+		.text(axisTickPercent[i].toFixed(1) + "%")
+}
+
+</script>
+</body>
+</html>
