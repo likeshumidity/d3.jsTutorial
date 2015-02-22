@@ -14,23 +14,20 @@
 <script>
 d3.select("body").append("div")
 	.attr("id", "header")
-
-d3.select("div").append("p")
+	.append("p")
 	.text("Is this a circle?")
 
 d3.select("body").append("svg")
 	.attr("width", "500px")
 	.attr("height", "40px")
-
-d3.select("svg").append("circle")
+	.append("circle")
 	.attr("r", 20)
 	.attr("cx", 50)
 	.attr("cy", 20)
 
 d3.select("body").append("div")
 	.attr("class", "footer")
-
-d3.select("div.footer").append("p")
+	.append("p")
 	.text("Yeah, looks like it")
 </script>
 </body>
