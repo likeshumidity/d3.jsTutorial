@@ -37,6 +37,19 @@ body {
 .y.axis line {
 	display: none;
 }
+.buttons-container {
+	width: 520px;
+	margin-bottom: 15px;
+}
+.button {
+	float: left;
+	margin-left: 10px;
+	font-weight: lighter;
+	cursor: pointer;
+}
+.selected {
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -45,7 +58,12 @@ body {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-var year = 2010;
+var buttonYears = new Array();
+for (i = 1950; i <= 2050; i += 5) {
+	buttonYears.push(i);
+}
+
+var year = 1950;
 
 var margin = {top: 20, right: 0, bottom: 0, left: 100},
     width = 500 - margin.left - margin.right,
@@ -69,8 +87,27 @@ var yAxis = d3.svg.axis()
 	.scale(y)
 	.orient("left");
 
+function keys(d) {
+	return d.age;
+}
+
 body.append("h2")
-	.text("Age distribution of the world, " + year);
+	.text("Age distribution of the world");
+
+var buttons = body.append("div")
+	.attr("class", "buttons-container")
+	.selectAll("div").data(buttonYears)
+	.enter().append("div")
+	.text(function(d) { return d; })
+	.attr("class", function(d) {
+		if (d == year)
+			return "button selected";
+		else
+			return "button";
+	});
+
+body.append("div")
+	.attr("class", "clearfix");
 
 body.append("div")
 	.attr("class", "top-label age-label")
@@ -101,8 +138,8 @@ d3.csv('allData.csv', function(error, data) {
 	var barGroup = svg.append("g")
 		.attr("class", "bargroup");
 
-	barGroup.selectAll("rect")
-		.data(popData)
+	var bars = barGroup.selectAll("rect")
+		.data(popData, keys)
 		.enter().append("rect")
 		.attr("class", "bar")
 		.attr("x", 0)
@@ -118,6 +155,21 @@ d3.csv('allData.csv', function(error, data) {
 		.call(yAxis)
 		.attr("class", "y axis");
 
+	buttons.on("click", function(d) {
+		d3.select('.selected')
+			.classed("selected", false);
+		d3.select(this)
+			.classed("selected", true);
+		year = d;
+
+		popData = data.filter(function(element) {return element.year == year; });
+
+		bars.data(popData, keys)
+			.transition()
+			.delay(250)
+			.duration(500)
+			.attr("width", function(d) { return x(d.value); });
+	});
 });
 </script>
 </body>
