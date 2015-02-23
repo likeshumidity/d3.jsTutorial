@@ -45,19 +45,16 @@ body {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-d3.csv('popData2010.csv', function(error, data) {
-	var popData = data;
-
 var margin = {top: 20, right: 0, bottom: 0, left: 100},
     width = 500 - margin.left - margin.right,
     height = 450 - margin.top - margin.bottom;
 
+var body = d3.select("body");
+
 var x = d3.scale.linear()
-	.domain([0, d3.max(popData, function(element) { return element.value; } ) ] )
 	.range([0, width]);
 
 var y = d3.scale.ordinal()
-	.domain(popData.map(function(element) { return element.age; }))
 	.rangeBands([0, height], 0.2, 0);
 
 var xAxis = d3.svg.axis()
@@ -66,12 +63,9 @@ var xAxis = d3.svg.axis()
 	.ticks(5, "%")
 	.tickSize(-height);
 
-
 var yAxis = d3.svg.axis()
 	.scale(y)
 	.orient("left");
-
-var body = d3.select("body");
 
 body.append("h2")
 	.text("Age distribution of the world, 2010");
@@ -90,31 +84,37 @@ body.append("div")
 body.append("div")
 	.attr("class", "clearfix");
 
-var svg = body.append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom)
-	.append("g")
-	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+d3.csv('popData2010.csv', function(error, data) {
+	var popData = data;
 
-var barGroup = svg.append("g")
-	.attr("class", "bargroup");
+	x.domain([0, d3.max(popData, function(element) { return element.value; } ) ] );
+	y.domain(popData.map(function(element) { return element.age; }));
 
-barGroup.selectAll("rect")
-	.data(popData)
-	.enter().append("rect")
-	.attr("class", "bar")
-	.attr("x", 0)
-	.attr("y", function(d) { return y(d.age); } )
-	.attr("width", function(d) { return x(d.value); } )
-	.attr("height", y.rangeBand());
+	var svg = body.append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-svg.append("g")
-	.call(xAxis)
-	.attr("class", "x axis")
+	var barGroup = svg.append("g")
+		.attr("class", "bargroup");
 
-svg.append("g")
-	.call(yAxis)
-	.attr("class", "y axis");
+	barGroup.selectAll("rect")
+		.data(popData)
+		.enter().append("rect")
+		.attr("class", "bar")
+		.attr("x", 0)
+		.attr("y", function(d) { return y(d.age); } )
+		.attr("width", function(d) { return x(d.value); } )
+		.attr("height", y.rangeBand());
+
+	svg.append("g")
+		.call(xAxis)
+		.attr("class", "x axis")
+
+	svg.append("g")
+		.call(yAxis)
+		.attr("class", "y axis");
 
 });
 </script>
