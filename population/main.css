@@ -45,3 +45,13 @@ body {
 .selected {
 	font-weight: bold;
 }
+.play-button {
+	margin-left: 10px;
+	margin-bottom: 15px;
+	font-style: italic;
+	cursor: pointer;
+	color: grey;
+}
+.play-button:hover {
+	color: black;
+}
