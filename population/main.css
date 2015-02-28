@@ -1,0 +1,47 @@
+body {
+	font-family: Helvetica, Arial;
+}
+.top-label {
+	font-size: 13px;
+	font-style: italic;
+	text-transform: uppercase;
+	float: left;
+}
+.age-label {
+	text-align: right;
+	font-weight: bold;
+	width: 90px;
+	padding-right: 10px;
+}
+.clearfix {
+	clear: both;
+}
+.bar {
+	fill: DarkSlateBlue;
+}
+.x.axis line {
+	fill: none;
+	stroke: #fff;
+}
+.axis path {
+	display: none;
+}
+.x.axis text {
+	font-size: 13px;
+}
+.y.axis line {
+	display: none;
+}
+.buttons-container {
+	width: 520px;
+	margin-bottom: 15px;
+}
+.button {
+	float: left;
+	margin-left: 10px;
+	font-weight: lighter;
+	cursor: pointer;
+}
+.selected {
+	font-weight: bold;
+}

@@ -2,55 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<style>
-body {
-	font-family: Helvetica, Arial;
-}
-.top-label {
-	font-size: 13px;
-	font-style: italic;
-	text-transform: uppercase;
-	float: left;
-}
-.age-label {
-	text-align: right;
-	font-weight: bold;
-	width: 90px;
-	padding-right: 10px;
-}
-.clearfix {
-	clear: both;
-}
-.bar {
-	fill: DarkSlateBlue;
-}
-.x.axis line {
-	fill: none;
-	stroke: #fff;
-}
-.axis path {
-	display: none;
-}
-.x.axis text {
-	font-size: 13px;
-}
-.y.axis line {
-	display: none;
-}
-.buttons-container {
-	width: 520px;
-	margin-bottom: 15px;
-}
-.button {
-	float: left;
-	margin-left: 10px;
-	font-weight: lighter;
-	cursor: pointer;
-}
-.selected {
-	font-weight: bold;
-}
-</style>
+<title>D3.js Tutorial</title>
+<link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 <body>
 	<!-- -->
@@ -89,6 +42,23 @@ var yAxis = d3.svg.axis()
 
 function keys(d) {
 	return d.age;
+}
+
+function update(updateYear) {
+	d3.select('.selected')
+		.classed("selected", false);
+	d3.select(this)
+		.classed("selected", true);
+
+	year = d;
+
+	popData = data.filter(function(element) {return element.year == year; });
+
+	bars.data(popData, keys)
+		.transition()
+		.delay(250)
+		.duration(500)
+		.attr("width", function(d) { return x(d.value); });
 }
 
 body.append("h2")
@@ -156,19 +126,6 @@ d3.csv('allData.csv', function(error, data) {
 		.attr("class", "y axis");
 
 	buttons.on("click", function(d) {
-		d3.select('.selected')
-			.classed("selected", false);
-		d3.select(this)
-			.classed("selected", true);
-		year = d;
-
-		popData = data.filter(function(element) {return element.year == year; });
-
-		bars.data(popData, keys)
-			.transition()
-			.delay(250)
-			.duration(500)
-			.attr("width", function(d) { return x(d.value); });
 	});
 });
 </script>
