@@ -112,28 +112,54 @@ d3.csv('allData.csv', function(error, data) {
 		.call(yAxis)
 		.attr("class", "y axis");
 
+	var isPlaying = false;
+	var selectedYear = year;
+
+	var cyclePause = function() {
+		isPlaying = false;
+	}
+
+	var cycleToggle = function() {
+		if (isPlaying) {
+			playAll.text("PLAY ALL YEARS");
+			cyclePause();
+		} else {
+			playAll.text("PAUSE");
+			cyclePlay();
+		}
+	}
+
 	buttons.on("click", function(d) {
 		update(d);
-		clearInterval(playInterval);
+		cyclePause();
 	});
 
-	var playInterval;
+	var cyclePlay = function() {
+		isPlaying = true;
 
-	playAll.on("click", function() {
-		var i = 0;
-
-		var playInterval = setInterval(function() {
-			update(buttonYears[i]);
-
-			i++;
-
-			if(i > buttonYears.length - 1) {
-				clearInterval(playInterval);
+		var firstClick = true;
+		for (var i = buttonYears.indexOf(selectedYear); i < buttonYears.length - 1; i++) {
+			if (!isPlaying) break;
+			if (firstClick) {
+				waitTime = 100;
+				firstClick = false;
+			} else {
+				waitTime = 700;
 			}
-		}, 700);
-	});
+
+			setTimeout(update(buttonYears[i]), waitTime);
+		}
+	}
+
+//	playAll.on("click", cyclePlay());
+//	playAll.on("click", alert('playall click'));
+
+	//pause (by click on play or by click on year) and change pause to play
+	//play (from current or from beginning if no current) and change play to pause
 
 	function update(updateYear) {
+		selectedYear = updateYear;
+
 		d3.select('.selected')
 			.classed("selected", false);
 
