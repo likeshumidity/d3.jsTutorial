@@ -114,47 +114,40 @@ d3.csv('allData.csv', function(error, data) {
 
 	buttons.on("click", function(d) {
 		update(d);
-		clearInterval(playInterval);
-		togglePlayPause();
+		cyclePause();
 	});
 
-	var togglePlayPause = function() {
-		if(isPlaying) {
-			playAll.text("PLAY ALL YEARS");
-		} else {
-			playAll.text("PAUSE");
-		}
-	}
-
-	var isPlaying = false;
 	var playInterval;
 
-	playAll.on("click", function() {
+	var cyclePause = function() {
+		clearInterval(playInterval);
+		playAll.text("PLAY ALL YEARS");
+		playAll.on("click", function() { cyclePlay(); });
+	}
+
+	cyclePause();
+
+	var cyclePlay = function() {
+		clearInterval(playInterval);
+
 		var i = 0;
-		isPlaying = true;
+		waitTime = 500;
 
 		playInterval = setInterval(function() {
-			if(!isPlaying) {
-				clearInterval(playInterval);
-			}
-
 			playAll.text("PAUSE");
+			playAll.on("click", function() { cyclePause(); });
 
 			update(buttonYears[i]);
 
 			i++;
 
 			if(i > buttonYears.length - 1) {
-				clearInterval(playInterval);
-				isPlaying = false;
-				togglePlayPause();
+				cyclePause();
 			}
-		}, 700);
-	});
+		}, waitTime);
+	}
 
 	function update(updateYear) {
-		selectedYear = updateYear;
-
 		d3.select('.selected')
 			.classed("selected", false);
 
