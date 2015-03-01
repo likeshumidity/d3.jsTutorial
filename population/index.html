@@ -134,25 +134,35 @@ d3.csv('allData.csv', function(error, data) {
 		cyclePause();
 	});
 
+	var advancePlay = function() {
+		update(selectedYear);
+	}
+
+/*
 	var cyclePlay = function() {
 		isPlaying = true;
 
 		var firstClick = true;
-		for (var i = buttonYears.indexOf(selectedYear); i < buttonYears.length - 1; i++) {
+		for (var i = 0; i < buttonYears.length - 1; i++) {
+			selectedYear = buttonYears[i];
+
 			if (!isPlaying) break;
 			if (firstClick) {
-				waitTime = 100;
+				var waitTime = 100;
 				firstClick = false;
 			} else {
-				waitTime = 700;
+				var waitTime = 700;
 			}
 
-			setTimeout(update(buttonYears[i]), waitTime);
+			setTimeout(advancePlay, waitTime);
+//			setTimeout(function() { update(buttonYears[i]); }, waitTime);
+//			alert(i);
+//			alert(buttonYears[i]);
 		}
 	}
+*/
 
-//	playAll.on("click", cyclePlay());
-//	playAll.on("click", alert('playall click'));
+	playAll.on("click", function() { cycleToggle(); });
 
 	//pause (by click on play or by click on year) and change pause to play
 	//play (from current or from beginning if no current) and change play to pause
